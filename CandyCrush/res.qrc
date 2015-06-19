@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/pic">
+        <file>blue.png</file>
+        <file>green.png</file>
+        <file>red.png</file>
+        <file>yellow.png</file>
+        <file>blue_clicked.png</file>
+        <file>green_clicked.png</file>
+        <file>red_clicked.png</file>
+        <file>yellow_clicked.png</file>
+        <file>blue_bomb.png</file>
+        <file>blue_horizontal_bomb.png</file>
+        <file>blue_vertical_bomb.png</file>
+        <file>green_bomb.png</file>
+        <file>green_horizontal_bomb.png</file>
+        <file>green_vertical_bomb.png</file>
+        <file>power_bomb.png</file>
+        <file>red_bomb.png</file>
+        <file>red_horizontal_bomb.png</file>
+        <file>red_vertical_bomb.png</file>
+        <file>yellow_bomb.png</file>
+        <file>yellow_horizontal_bomb.png</file>
+        <file>yellow_vertical_bomb.png</file>
+        <file>blue_bomb_clicked.png</file>
+        <file>blue_horizontal_bomb_clicked.png</file>
+        <file>blue_vertical_bomb_clicked.png</file>
+        <file>green_bomb_clicked.png</file>
+        <file>green_horizontal_bomb_clicked.png</file>
+        <file>green_vertical_bomb_clicked.png</file>
+        <file>power_bomb_clicked.png</file>
+        <file>red_bomb_clicked.png</file>
+        <file>red_horizontal_bomb_clicked.png</file>
+        <file>red_vertical_bomb_clicked.png</file>
+        <file>yellow_bomb_clicked.png</file>
+        <file>yellow_horizontal_bomb_clicked.png</file>
+        <file>yellow_vertical_bomb_clicked.png</file>
+    </qresource>
+</RCC>

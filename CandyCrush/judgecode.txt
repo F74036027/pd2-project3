@@ -1,0 +1,904 @@
+    // need to judge four different directions
+    // and 5 types to destroy
+    Destroy * destroy;
+    bool AnySpawn=false;
+    // check destroy all
+    if((b[row1][col1]->number==5)&&(b[row2][col2]->number==5)){
+        destroy=new All;
+        destroy->eliminate(b,b[row1][col1]);
+        //delete destory;
+        return true;
+    }
+    // end check destroy all
+
+    // check destroy one color
+    if(b[row1][col1]->number==5){
+        b[row1][col1]->number=0;
+        destroy=new One_Color;
+        destroy->eliminate(b,b[row2][col2]);
+        //delete destory;
+        return true;
+    }
+    if(b[row2][col2]->number==5){
+        b[row2][col2]->number=0;
+        destroy=new One_Color;
+        destroy->eliminate(b,b[row1][col1]);
+        //delete destory;
+        return true;
+    }
+    // end check destroy one color
+
+    // check destroy nine block
+    if(((b[row1][col1]->number)/10)!=0&&(((b[row1][col1]->number)%10)==3)){
+        int num=(b[row1][col1]->number)/10;
+        if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            b[row1][col1-2]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            return true;
+        }//left condition
+        if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            b[row1][col1+2]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            return true;
+        }//right condition
+        if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            b[row1-2][col1]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            return true;
+        }//up condition
+        if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            b[row1+2][col1]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            return true;
+        }//down condition
+        if(col1>=1&&col1<=8&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))){
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            return true;
+        }//horizontal middle condition
+        if(row1>=1&&row1<=8&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            return true;
+        }//vertical middle condition
+    }
+    if(((b[row2][col2]->number)/10)!=0&&(((b[row2][col2]->number)%10)==3)){
+        int num=(b[row2][col2]->number)/10;
+        if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            b[row2][col2-2]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            return true;
+        }//left condition
+        if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            b[row2][col2+2]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            return true;
+        }//right condition
+        if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            b[row2-2][col2]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            return true;
+        }//up condition
+        if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            b[row2+2][col2]->number=0;
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            return true;
+        }//down condition
+        if(col2>=1&&col2<=8&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))){
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            return true;
+        }//horizontal middle condition
+        if(row2>=1&&row2<=8&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            destroy=new NineBlock;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            return true;
+        }//vertical middle condition
+    }
+    // end check destroy nine block
+
+    // check spawn power_bomb
+    if(col1>=2&&col1<=7&&(b[row1][col1]->number==b[row1][col1-2]->number)&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1][col1+2]->number)){ 
+       if((row1>=2&&b[row1][col1]->number==b[row1-2][col1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)){
+            b[row1-2][col1]->number=0;
+            b[row1-1][col1]->number=0;
+        }
+        if((row1<=7&&b[row1][col1]->number==b[row1+1][col1]->number)&&(b[row1][col1]->number==b[row1+2][col1]->number)){
+            b[row1+1][col1]->number=0;
+            b[row1+2][col1]->number=0;
+        }
+        destroy=new Spawn5;
+        destroy->spawn(b[row1][col1-2],b[row1][col1-1],b[row1][col1],b[row1][col1+1],b[row1][col1+2]);
+        //delete static_cast<Spawn5 *>(destory);
+        AnySpawn=true;
+    }//horizontal 5
+    if(row1>=2&&row1<=7&&(b[row1][col1]->number==b[row1-2][col1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)&&(b[row1][col1]->number==b[row1+2][col1]->number)){
+        if((col1>=2&&b[row1][col1]->number==b[row1][col1-2]->number)&&(b[row1][col1]->number==b[row1][col1-1]->number)){
+            b[row1][col1-2]->number=0;
+            b[row1][col1-1]->number=0;
+        }
+        if((col1<=7&&b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1][col1+2]->number)){
+            b[row1][col1+1]->number=0;
+            b[row1][col1+2]->number=0;
+        }
+        destroy=new Spawn5;
+        destroy->spawn(b[row1-2][col1],b[row1-1][col1],b[row1][col1],b[row1+1][col1],b[row1+2][col1]);
+        //delete destory;
+        AnySpawn=true;
+    }//vertical 5
+    if(col2>=2&&col2<=7&&(b[row2][col2]->number==b[row2][col2-2]->number)&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2][col2+2]->number)){
+        if((row2>=2&&b[row2][col2]->number==b[row2-2][col2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)){
+            b[row2-2][col2]->number=0;
+            b[row2-1][col2]->number=0;
+        }
+        if((row2<=7&&b[row2][col2]->number==b[row2+1][col2]->number)&&(b[row2][col2]->number==b[row2+2][col2]->number)){
+            b[row2+1][col2]->number=0;
+            b[row2+2][col2]->number=0;
+        }
+        destroy=new Spawn5;
+        destroy->spawn(b[row2][col2-2],b[row2][col2-1],b[row2][col2],b[row2][col2+1],b[row2][col2+2]);
+        //delete destory;
+        AnySpawn=true;
+    }//horizontal 5
+    if(row2>=2&&row2<=7&&(b[row2][col2]->number==b[row2-2][col2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)&&(b[row2][col2]->number==b[row2+2][col2]->number)){
+        if((col2>=2&&b[row2][col2]->number==b[row2][col2-2]->number)&&(b[row2][col2]->number==b[row2][col2-1]->number)){
+            b[row2][col2-2]->number=0;
+            b[row2][col2-1]->number=0;
+        }
+        if((col2<=7&&b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2][col2+2]->number)){
+            b[row2][col2+1]->number=0;
+            b[row2][col2+2]->number=0;
+        }
+        destroy=new Spawn5;
+        destroy->spawn(b[row2-2][col2],b[row2-1][col2],b[row2][col2],b[row2+1][col2],b[row2+2][col2]);
+        //delete destory;
+        AnySpawn=true;
+    }//vertical 5
+    // end check power_bomb spawn
+
+    // check spawn bomb
+    if(row1<=7&&col1<=7&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1][col1+2]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)&&(b[row1][col1]->number==b[row1+2][col1]->number)){
+        if(col1>=1&&(b[row1][col1]->number==b[row1][col1-1]->number)){
+            b[row1][col1-1]->number=0;
+        }
+        if(row1>=1&&(b[row1][col1]->number==b[row1-1][col1]->number)){
+            b[row1-1][col1]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1+1],b[row1][col1+2],b[row1][col1],b[row1+1][col1],b[row1+2][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//right down condition
+    if(row1<=7&&col1>=2&&(b[row1][col1]->number==b[row1][col1-2]->number)&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)&&(b[row1][col1]->number==b[row1+2][col1]->number)){
+        if(col1<=8&&(b[row1][col1]->number==b[row1][col1+1]->number)){
+            b[row1][col1+1]->number=0;
+        }
+        if(row1>=1&&(b[row1][col1]->number==b[row1-1][col1]->number)){
+            b[row1-1][col1]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1-2],b[row1][col1-1],b[row1][col1],b[row1+1][col1],b[row1+2][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//left down condition
+    if(row1>=2&&col1<=7&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1][col1+2]->number)&&(b[row1][col1]->number==b[row1-2][col1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)){
+        if(col1>=1&&(b[row1][col1]->number==b[row1][col1-1]->number)){
+            b[row1][col1-1]->number=0;
+        }
+        if(row1<=8&&(b[row1][col1]->number==b[row1+1][col1]->number)){
+            b[row1+1][col1]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1+1],b[row1][col1+2],b[row1][col1],b[row1-2][col1],b[row1-1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//right up condition
+    if(row1>=2&&col1>=2&&(b[row1][col1]->number==b[row1][col1-2]->number)&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1-2][col1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)){
+        if(col1<=8&&(b[row1][col1]->number==b[row1][col1+1]->number)){
+            b[row1][col1+1]->number=0;
+        }
+        if(row1<=8&&(b[row1][col1]->number==b[row1+1][col1]->number)){
+            b[row1+1][col1]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1-2],b[row1][col1-1],b[row1][col1],b[row1-2][col1],b[row1-1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//left up condition
+    if(col1>=2&&row1>=1&&row1<=8&&(b[row1][col1]->number==b[row1][col1-2]->number)&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1-2],b[row1][col1-1],b[row1][col1],b[row1-1][col1],b[row1+1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//left T condition
+    if(col1<=7&&row1>=1&&row1<=8&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1][col1+2]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1+1],b[row1][col1+2],b[row1][col1],b[row1-1][col1],b[row1+1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//right T condition
+    if(row1>=2&&col1>=1&&col1<=8&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1-2][col1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1-1],b[row1][col1+1],b[row1][col1],b[row1-2][col1],b[row1-1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//up T condition
+    if(row1<=7&&col1>=1&&col1<=8&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)&&(b[row1][col1]->number==b[row1+2][col1]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row1][col1-1],b[row1][col1+1],b[row1][col1],b[row1+1][col1],b[row1+2][col1]);
+        // delete destory
+        AnySpawn=true;
+    }//down T condition
+    if(row2<=7&&col2<=7&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2][col2+2]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)&&(b[row2][col2]->number==b[row2+2][col2]->number)){
+        if(col2>=1&&(b[row2][col2]->number==b[row2][col2-1]->number)){
+            b[row2][col2-1]->number=0;
+        }
+        if(row2>=1&&(b[row2][col2]->number==b[row2-1][col2]->number)){
+            b[row2-1][col2]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2+1],b[row2][col2+2],b[row2][col2],b[row2+1][col2],b[row2+2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//right down condition
+    if(row2<=7&&col2>=2&&(b[row2][col2]->number==b[row2][col2-2]->number)&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)&&(b[row2][col2]->number==b[row2+2][col2]->number)){
+        if(col2<=8&&(b[row2][col2]->number==b[row2][col2+1]->number)){
+            b[row2][col2+1]->number=0;
+        }
+        if(row2>=1&&(b[row2][col2]->number==b[row2-1][col2]->number)){
+            b[row2-1][col2]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2-2],b[row2][col2-1],b[row2][col2],b[row2+1][col2],b[row2+2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//left down condition
+    if(row2>=2&&col2<=7&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2][col2+2]->number)&&(b[row2][col2]->number==b[row2-2][col2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)){
+        if(col2>=1&&(b[row2][col2]->number==b[row2][col2-1]->number)){
+            b[row2][col2-1]->number=0;
+        }
+        if(row2<=8&&(b[row2][col2]->number==b[row2+1][col2]->number)){
+            b[row2+1][col2]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2+1],b[row2][col2+2],b[row2][col2],b[row2-2][col2],b[row2-1][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//right up condition
+    if(row2>=2&&col2>=2&&(b[row2][col2]->number==b[row2][col2-2]->number)&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2-2][col2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)){
+        if(col2<=8&&(b[row2][col2]->number==b[row2][col2+1]->number)){
+            b[row2][col2+1]->number=0;
+        }
+        if(row2<=8&&(b[row2][col2]->number==b[row2+1][col2]->number)){
+            b[row2+1][col2]->number=0;
+        }
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2-2],b[row2][col2-1],b[row2][col2],b[row2-2][col2],b[row2-1][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//left up condition
+    if(col2>=2&&row2>=1&&row2<=8&&(b[row2][col2]->number==b[row2][col2-2]->number)&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2-2],b[row2][col2-1],b[row2][col2],b[row2-1][col2],b[row2+1][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//left T condition
+    if(col2<=7&&row2>=1&&row2<=8&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2][col2+2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2+1],b[row2][col2+2],b[row2][col2],b[row2-1][col2],b[row2+1][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//right T condition
+    if(row2>=2&&col2>=1&&col2<=8&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2-2][col2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2-1],b[row2][col2+1],b[row2][col2],b[row2-2][col2],b[row2-1][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//up T condition
+    if(row2<=7&&col2>=1&&col2<=8&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)&&(b[row2][col2]->number==b[row2+2][col2]->number)){
+        destroy=new Spawn5_B;
+        destroy->spawn(b[row2][col2-1],b[row2][col2+1],b[row2][col2],b[row2+1][col2],b[row2+2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }//down T condition
+    // end check bomb spawn
+
+    // check spawn horizontal_bomb
+    if(col1>=1&&col1<=7&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1][col1+1]->number)&&(b[row1][col1]->number==b[row1][col1+2]->number)){
+        destroy=new Spawn4_H;
+        destroy->spawn(b[row1][col1],b[row1][col1-1],b[row1][col1+1],b[row1][col1+2],b[row1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }
+    if(col1>=2&&col1<=8&&(b[row1][col1]->number==b[row1][col1-2]->number)&&(b[row1][col1]->number==b[row1][col1-1]->number)&&(b[row1][col1]->number==b[row1][col1+1]->number)){
+        destroy=new Spawn4_H;
+        destroy->spawn(b[row1][col1],b[row1][col1-2],b[row1][col1-1],b[row1][col1+1],b[row1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }
+    if(col2>=1&&col2<=7&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2][col2+1]->number)&&(b[row2][col2]->number==b[row2][col2+2]->number)){
+        destroy=new Spawn4_H;
+        destroy->spawn(b[row2][col2],b[row2][col2-1],b[row2][col2+1],b[row2][col2+2],b[row2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }
+    if(col2>=2&&col2<=8&&(b[row2][col2]->number==b[row2][col2-2]->number)&&(b[row2][col2]->number==b[row2][col2-1]->number)&&(b[row2][col2]->number==b[row2][col2+1]->number)){
+        destroy=new Spawn4_H;
+        destroy->spawn(b[row2][col2],b[row2][col2-2],b[row2][col2-1],b[row2][col2+1],b[row2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }
+    // end check horizontal_bomb spawn
+
+    // check spawn vertical_bomb
+    if(row1>=1&&row1<=7&&(b[row1][col1]->number==b[row1-1][col1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)&&(b[row1][col1]->number==b[row1+2][col1]->number)){
+        destroy=new Spawn4_V;
+        destroy->spawn(b[row1][col1],b[row1-1][col1],b[row1+1][col1],b[row1+2][col1],b[row1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }
+    if(row1>=2&&row1<=8&&(b[row1][col1]->number==b[row1-2][col1]->number)&&(b[row1][col1]->number==b[row1-1][col1]->number)&&(b[row1][col1]->number==b[row1+1][col1]->number)){
+        destroy=new Spawn4_V;
+        destroy->spawn(b[row1][col1],b[row1-2][col1],b[row1-1][col1],b[row1+1][col1],b[row1][col1]);
+        // delete destory
+        AnySpawn=true;
+    }
+    if(row2>=1&&row2<=7&&(b[row2][col2]->number==b[row2-1][col2]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)&&(b[row2][col2]->number==b[row2+2][col2]->number)){
+        destroy=new Spawn4_V;
+        destroy->spawn(b[row2][col2],b[row2-1][col2],b[row2+1][col2],b[row2+2][col2],b[row2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }
+    if(row2>=2&&row2<=8&&(b[row2][col2]->number==b[row2-2][col2]->number)&&(b[row2][col2]->number==b[row2-1][col2]->number)&&(b[row2][col2]->number==b[row2+1][col2]->number)){
+        destroy=new Spawn4_V;
+        destroy->spawn(b[row2][col2],b[row2-2][col2],b[row2-1][col2],b[row2+1][col2],b[row2][col2]);
+        // delete destory
+        AnySpawn=true;
+    }
+    // end check vertical_bomb spawn
+
+    // check destroy vertical line
+    if((b[row1][col1]->number/10!=0)&&(b[row1][col1]->number%10==1)){
+        int num=(b[row1][col1]->number)/10;
+        if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            if(col1<=8&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))){
+                b[row1][col1+1]->number=0;
+            }//right 1 condition
+            b[row1][col1-2]->number=0;
+            b[row1][col1-1]->number=0;
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//left condition
+        if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(col1>=1&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-1]->number=0;
+            }//left 1 condition
+            b[row1][col1+1]->number=0;
+            b[row1][col1+2]->number=0;
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//right condition
+        if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//up condition
+        if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+            if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+                b[row1][col1-2]->number=0;
+                b[row1][col1-1]->number=0;
+            }//left condition
+            if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+                b[row1][col1+1]->number=0;
+                b[row1][col1+2]->number=0;
+            }//right condition
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//down condition
+        if(col1>=1&&col1<=8&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))){
+            b[row1][col1-1]->number=0;
+            b[row1][col1+1]->number=0;
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;;
+        }//horizontal middle condition
+        if(row1>=1&&row1<=8&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))){
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//vertical middle condition
+    }
+    if(((b[row2][col2]->number)/10)!=0&&(((b[row2][col2]->number)%10)==1)){
+        int num=(b[row2][col2]->number)/10;
+        if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            if(col2<=8&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))){
+                b[row2][col2+1]->number=0;
+            }//right 1 condition
+            b[row2][col2-2]->number=0;
+            b[row2][col2-1]->number=0;
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//left condition
+        if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(col2>=1&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-1]->number=0;
+            }//left 1 condition
+            b[row2][col2+1]->number=0;
+            b[row2][col2+2]->number=0;
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//right condition
+        if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//up condition
+        if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+            if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+                b[row2][col2-2]->number=0;
+                b[row2][col2-1]->number=0;
+            }//left condition
+            if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+                b[row2][col2+1]->number=0;
+                b[row2][col2+2]->number=0;
+            }//right condition
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//down condition
+        if(col2>=1&&col2<=8&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))){
+            b[row2][col2-1]->number=0;
+            b[row2][col2+1]->number=0;
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//horizontal middle condition
+        if(row2>=1&&row2<=8&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))){
+            destroy=new Vertical;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//vertical middle condition
+    }
+    // end check destroy vertical line
+
+    // check destroy horizontal line
+    if(((b[row1][col1]->number)/10)!=0&&(((b[row1][col1]->number)%10)==2)){
+        int num=(b[row1][col1]->number)/10;
+        if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//left condition
+        if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//right condition
+        if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+            if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+                b[row1+2][col1]->number=0;
+            }//down condition
+            if(row1<=8&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))){
+                b[row1+1][col1]->number=0;
+            }//down 1 condition
+            b[row1-2][col1]->number=0;
+            b[row1-1][col1]->number=0;
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//up condition
+        if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+            if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-2][col1]->number=0;
+                b[row1-1][col1]->number=0;
+            }//up condition
+            if(row1>=1&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+                b[row1-1][col1]->number=0;
+            }//up 1 condition
+            b[row1+1][col1]->number=0;
+            b[row1+2][col1]->number=0;
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//down condition
+        if(col1>=1&&col1<=8&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))){
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//horizontal middle condition
+        if(row1>=1&&row1<=8&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))){
+            b[row1-1][col1]->number=0;
+            b[row1+1][col1]->number=0;
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//vertical middle condition
+    }
+    if(((b[row2][col2]->number)/10)!=0&&(((b[row2][col2]->number)%10)==2)){
+        int num=(b[row2][col2]->number)/10;
+        if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//left condition
+        if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//right condition
+        if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+            if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+                b[row2+2][col2]->number=0;
+            }//down condition
+            if(row2<=8&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))){
+                b[row2+1][col2]->number=0;
+            }//down 1 condition
+            b[row2-2][col2]->number=0;
+            b[row2-1][col2]->number=0;
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//up condition
+        if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+            if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-2][col2]->number=0;
+                b[row2-1][col2]->number=0;
+            }//up condition
+            if(row2>=1&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+                b[row2-1][col2]->number=0;
+            }//up 1 condition
+            b[row2+1][col2]->number=0;
+            b[row2+2][col2]->number=0;
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//down condition
+        if(col2>=1&&col2<=8&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))){
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//horizontal middle condition
+        if(row2>=1&&row2<=8&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))){
+            b[row2-1][col2]->number=0;
+            b[row2+1][col2]->number=0;
+            destroy=new Horizontal;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//vertical middle condition
+    }
+    // end check destroy horizontal line
+
+    // check destroy three vertical
+    if(b[row1][col1]->number/10==0){
+        int num=b[row1][col1]->number;
+        if(row1>=2&&((num==b[row1-2][col1]->number)||(num==b[row1-2][col1]->number/10))&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))){
+            destroy=new Three_V;
+            destroy->eliminate(b,b[row1-2][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//up condition
+        if(row1<=7&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))&&((num==b[row1+2][col1]->number)||(num==b[row1+2][col1]->number/10))){
+            destroy=new Three_V;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//down condition
+        if(row1>=1&&row1<=8&&((num==b[row1-1][col1]->number)||(num==b[row1-1][col1]->number/10))&&((num==b[row1+1][col1]->number)||(num==b[row1+1][col1]->number/10))){
+            destroy=new Three_V;
+            destroy->eliminate(b,b[row1-1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//vertical middle condition
+    }
+    if(((b[row2][col2]->number)/10)==0){
+        int num=b[row2][col2]->number;
+        if(row2>=2&&((num==b[row2-2][col2]->number)||(num==b[row2-2][col2]->number/10))&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))){
+            destroy=new Three_V;
+            destroy->eliminate(b,b[row2-2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//up condition
+        if(row2<=7&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))&&((num==b[row2+2][col2]->number)||(num==b[row2+2][col2]->number/10))){
+            destroy=new Three_V;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//down condition
+        if(row2>=1&&row2<=8&&((num==b[row2-1][col2]->number)||(num==b[row2-1][col2]->number/10))&&((num==b[row2+1][col2]->number)||(num==b[row2+1][col2]->number/10))){
+            destroy=new Three_V;
+            destroy->eliminate(b,b[row2-1][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//vertical middle condition
+    }
+    // end check destroy three vertical
+
+    // check destroy three horizontal
+    if(((b[row1][col1]->number)/10)==0){
+        int num=b[row1][col1]->number;
+        if(col1>=2&&((num==b[row1][col1-2]->number)||(num==b[row1][col1-2]->number/10))&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))){
+            destroy=new Three_H;
+            destroy->eliminate(b,b[row1][col1-2]);
+            //delete destory;
+            AnySpawn=true;
+        }//left condition
+        if(col1<=7&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))&&((num==b[row1][col1+2]->number)||(num==b[row1][col1+2]->number/10))){
+            destroy=new Three_H;
+            destroy->eliminate(b,b[row1][col1]);
+            //delete destory;
+            AnySpawn=true;
+        }//right condition
+        if(col1>=1&&col1<=8&&((num==b[row1][col1-1]->number)||(num==b[row1][col1-1]->number/10))&&((num==b[row1][col1+1]->number)||(num==b[row1][col1+1]->number/10))){
+            destroy=new Three_H;
+            destroy->eliminate(b,b[row1][col1-1]);
+            //delete destory;
+            AnySpawn=true;
+        }//horizontal middle condition
+    }
+    if(((b[row2][col2]->number)/10)==0){
+        int num=b[row2][col2]->number;
+        if(col2>=2&&((num==b[row2][col2-2]->number)||(num==b[row2][col2-2]->number/10))&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))){
+            destroy=new Three_H;
+            destroy->eliminate(b,b[row2][col2-2]);
+            //delete destory;
+            AnySpawn=true;
+        }//left condition
+        if(col2<=7&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))&&((num==b[row2][col2+2]->number)||(num==b[row2][col2+2]->number/10))){
+            destroy=new Three_H;
+            destroy->eliminate(b,b[row2][col2]);
+            //delete destory;
+            AnySpawn=true;
+        }//right condition
+        if(col2>=1&&col2<=8&&((num==b[row2][col2-1]->number)||(num==b[row2][col2-1]->number/10))&&((num==b[row2][col2+1]->number)||(num==b[row2][col2+1]->number/10))){
+            destroy=new Three_H;
+            destroy->eliminate(b,b[row2][col2-1]);
+            //delete destory;
+            AnySpawn=true;
+        }//horizontal middle condition
+    }
+    // end check destroy three horizontal
+
+    return AnySpawn;
