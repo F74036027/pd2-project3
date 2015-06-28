@@ -10,17 +10,18 @@ All::All()
 
 }
 
-void All::spawn(Blank * b[10][10],Blank * clicked,int mode)
+void All::spawn(Blank * b[10][10],Blank * clicked,int mode,int *score)
 {
     // garbage function
 }
 
-void All::eliminate(Blank *b[10][10],Blank * clicked)
+void All::eliminate(Blank *b[10][10],Blank * clicked,int *score)
 {
     // clicked is garbage value
-    for(int i=0;i<10;i++){qDebug()<<"in";
+    for(int i=0;i<10;i++){
         for(int j=0;j<10;j++){
            b[i][j]->number=0;
+           *score++;
         }
     }
 }

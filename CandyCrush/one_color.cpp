@@ -10,12 +10,12 @@ One_Color::One_Color()
 
 }
 
-void One_Color::spawn(Blank * b[10][10],Blank * clicked,int mode)
+void One_Color::spawn(Blank * b[10][10],Blank * clicked,int mode,int *score)
 {
     // garbage function
 }
 
-void One_Color::eliminate(Blank *b[10][10], Blank *clicked)
+void One_Color::eliminate(Blank *b[10][10], Blank *clicked,int *score)
 {
     int destroy_color;
     int num_copy[10][10];
@@ -38,22 +38,23 @@ void One_Color::eliminate(Blank *b[10][10], Blank *clicked)
             for(int j=0;j<10;j++){
                 if(num_copy[i][j]==destroy_color){
                     b[i][j]->number=0;
+                    *score++;
                 }
                 else if((num_copy[i][j]/10!=0)&&(num_copy[i][j]/10==destroy_color)){
                     switch (num_copy[i][j]%10) {
                     case 1: // vertical bomb
                         d=new Vertical;
-                        d->eliminate(b,b[i][j]);
+                        d->eliminate(b,b[i][j],score);
                         delete d;
                         break;
                     case 2: // horizontal bomb
                         d=new Horizontal;
-                        d->eliminate(b,b[i][j]);
+                        d->eliminate(b,b[i][j],score);
                         delete d;
                         break;
                     case 3: // bomb
                         d=new NineBlock;
-                        d->eliminate(b,b[i][j]);
+                        d->eliminate(b,b[i][j],score);
                         delete d;
                         break;
                     default:

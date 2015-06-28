@@ -10,17 +10,18 @@ Horizontal::Horizontal()
 
 }
 
-void Horizontal::spawn(Blank * b[10][10],Blank * clicked,int mode)
+void Horizontal::spawn(Blank * b[10][10],Blank * clicked,int mode,int *score)
 {
     // garbage function
 }
 
-void Horizontal::eliminate(Blank *b[10][10], Blank *clicked)
+void Horizontal::eliminate(Blank *b[10][10], Blank *clicked,int *score)
 {
     clicked->number=0;
     int row=clicked->row;
     Destroy * d;
     int TenNum[10]={0};
+    *score+=10;
 
     for(int i=0;i<10;i++){
         if(b[row][i]->number/10!=0){
@@ -32,20 +33,21 @@ void Horizontal::eliminate(Blank *b[10][10], Blank *clicked)
     for(int i=0;i<10;i++){
         switch(TenNum[i]){
         case 0: // normal component
+            b[row][i]->number=0;
         break;
         case 1: // vertical bomb
             d=new Vertical;
-            d->eliminate(b,b[row][i]);
+            d->eliminate(b,b[row][i],score);
             delete d;
             break;
         case 2: // horizontal bomb
             d=new Horizontal;
-            d->eliminate(b,b[row][i]);
+            d->eliminate(b,b[row][i],score);
             delete d;
             break;
         case 3: // bomb
             d=new NineBlock;
-            d->eliminate(b,b[row][i]);
+            d->eliminate(b,b[row][i],score);
             delete d;
             break;
         default:

@@ -14,7 +14,11 @@ INPUT(
 ./release\horizontal.o
 ./release\three_h.o
 ./release\three_v.o
+./release\startwindow.o
+./release\gameover.o
 ./release\qrc_res.o
 ./release\moc_mainwindow.o
 ./release\moc_blank.o
+./release\moc_startwindow.o
+./release\moc_gameover.o
 );

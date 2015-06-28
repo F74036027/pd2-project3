@@ -10,12 +10,13 @@ Spawn4_H::Spawn4_H()
 
 }
 
-void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode)
+void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode,int *score)
 {
     int row=clicked->row;
     int col=clicked->column;
     int FourNum[4]={0};
     Destroy * d;
+    *score+=4;
 
     switch(mode){
     case 1:// OXOO normal component
@@ -33,17 +34,17 @@ void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row][col-1+i]);
+                d->eliminate(b,b[row][col-1+i],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row][col-1+i]);
+                d->eliminate(b,b[row][col-1+i],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row][col-1+i]);
+                d->eliminate(b,b[row][col-1+i],score);
                 delete d;
                 break;
             }
@@ -65,17 +66,17 @@ void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             }
@@ -96,17 +97,17 @@ void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row][col-1+i]);
+                d->eliminate(b,b[row][col-1+i],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row][col-1+i]);
+                d->eliminate(b,b[row][col-1+i],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row][col-1+i]);
+                d->eliminate(b,b[row][col-1+i],score);
                 delete d;
                 break;
             }
@@ -127,17 +128,17 @@ void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             }
@@ -149,7 +150,7 @@ void Spawn4_H::spawn(Blank * b[10][10],Blank * clicked,int mode)
     }
 }
 
-void Spawn4_H::eliminate(Blank *b[10][10],Blank * clicked)
+void Spawn4_H::eliminate(Blank *b[10][10],Blank * clicked,int *score)
 {
     // garbage function
 }

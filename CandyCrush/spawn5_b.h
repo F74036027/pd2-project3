@@ -7,8 +7,8 @@ class Spawn5_B:public Destroy
 {
 public:
     Spawn5_B();
-    virtual void spawn(Blank * b[10][10],Blank * clicked,int mode);
-    virtual void eliminate(Blank * b[10][10],Blank * clicked);
+    virtual void spawn(Blank * b[10][10],Blank * clicked,int mode,int *score);
+    virtual void eliminate(Blank * b[10][10],Blank * clicked,int *score);
     virtual int condition(Blank *b[10][10], Blank *focus);
     virtual ~Spawn5_B();
 };

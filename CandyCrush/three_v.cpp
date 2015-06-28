@@ -10,12 +10,13 @@ Three_V::Three_V()
 
 }
 
-void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
+void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode,int *score)
 {
     int row=clicked->row;
     int col=clicked->column;
     Destroy * d;
     int ThreeNum[3]={0};
+    *score+=3;
 
     switch(mode){
     case 1: // topest normal component
@@ -32,17 +33,17 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row+i][col]);
+                d->eliminate(b,b[row+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row+i][col]);
+                d->eliminate(b,b[row+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row+i][col]);
+                d->eliminate(b,b[row+i][col],score);
                 delete d;
                 break;
             }
@@ -63,17 +64,17 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row-1+i][col]);
+                d->eliminate(b,b[row-1+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row-1+i][col]);
+                d->eliminate(b,b[row-1+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row-1+i][col]);
+                d->eliminate(b,b[row-1+i][col],score);
                 delete d;
                 break;
             }
@@ -94,17 +95,17 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             }
@@ -124,17 +125,17 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row+i][col]);
+                d->eliminate(b,b[row+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row+i][col]);
+                d->eliminate(b,b[row+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row+i][col]);
+                d->eliminate(b,b[row+i][col],score);
                 delete d;
                 break;
             }
@@ -153,17 +154,17 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row-1+i][col]);
+                d->eliminate(b,b[row-1+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row-1+i][col]);
+                d->eliminate(b,b[row-1+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row-1+i][col]);
+                d->eliminate(b,b[row-1+i][col],score);
                 delete d;
                 break;
             }
@@ -183,17 +184,17 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             }
@@ -203,7 +204,7 @@ void Three_V::spawn(Blank * b[10][10],Blank * clicked,int mode)
     }
 }
 
-void Three_V::eliminate(Blank *b[10][10], Blank *clicked)
+void Three_V::eliminate(Blank *b[10][10], Blank *clicked,int *score)
 {
     // garbage function
 }

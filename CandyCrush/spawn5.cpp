@@ -10,12 +10,13 @@ Spawn5::Spawn5()
 
 }
 
-void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
+void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode,int *score)
 {
     int row=clicked->row;
     int col=clicked->column;
     int num=clicked->number;
     int FiveNum[5]={0};
+    *score+=5;
 
     switch(mode){
     case 1:// vertical normal component
@@ -43,17 +44,17 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             }
@@ -66,8 +67,8 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
             b[row-1][col]->number=0;
         }// up condition
         if(row<=7&&((num==b[row+1][col]->number)||(num==b[row+1][col]->number/10))&&((num==b[row+2][col]->number)||(num==b[row+2][col]->number/10))){
-            b[row-2][col]->number=0;
-            b[row-1][col]->number=0;
+            b[row+1][col]->number=0;
+            b[row+2][col]->number=0;
         }// down condition
 
         if(b[row][col-2]->number/10!=0)FiveNum[0]=b[row][col-2]->number%10;
@@ -84,17 +85,17 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             }
@@ -125,17 +126,17 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row-2+i][col]);
+                d->eliminate(b,b[row-2+i][col],score);
                 delete d;
                 break;
             }
@@ -149,8 +150,8 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
             b[row-1][col]->number=0;
         }// up condition
         if(row<=7&&((num==b[row+1][col]->number)||(num==b[row+1][col]->number/10))&&((num==b[row+2][col]->number)||(num==b[row+2][col]->number/10))){
-            b[row-2][col]->number=0;
-            b[row-1][col]->number=0;
+            b[row+1][col]->number=0;
+            b[row+2][col]->number=0;
         }// down condition
 
         if(b[row][col-2]->number/10!=0)FiveNum[0]=b[row][col-2]->number%10;
@@ -167,17 +168,17 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
                 break;
             case 1:
                 d=new Vertical;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 2:
                 d=new Horizontal;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             case 3:
                 d=new NineBlock;
-                d->eliminate(b,b[row][col-2+i]);
+                d->eliminate(b,b[row][col-2+i],score);
                 delete d;
                 break;
             }
@@ -189,7 +190,7 @@ void Spawn5::spawn(Blank * b[10][10],Blank * clicked,int mode)
     }
 }
 
-void Spawn5::eliminate(Blank *b[10][10],Blank * clicked)
+void Spawn5::eliminate(Blank *b[10][10],Blank * clicked,int *score)
 {
     // garbage function
 }

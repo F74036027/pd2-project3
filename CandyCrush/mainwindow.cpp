@@ -30,17 +30,42 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     srand(time(NULL));
     isClicked=false;
+    GG=false;
+    OnOff=true;
+    score=0;
+    scorePtr=&score;
+
+    time_lost=60;
+    t=new QTimer();
+
     GameStart();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+            delete b[i][j];
+        }
+    }
+    delete t;
+    if(GG)delete G;
 }
 
 void MainWindow::GameStart()
 {
     isClicked=false;
+    OnOff=true;
+
+    score=0;
+    ScoreString=QString::number(score,10);
+    ui->Score->setText(ScoreString);
+
+    time_lost=60;
+    TimeString=QString::number(time_lost,10);
+    ui->time_left->setText(TimeString);
+
     for(int i=0;i<10;i++){
         for(int j=0;j<10;j++){
             b[i][j]->setRandonNumber();
@@ -53,6 +78,12 @@ void MainWindow::GameStart()
             }
         }
     }
+    if(!CanChange()){
+        ReNewMap();
+    }
+
+    connect(t,SIGNAL(timeout()),this,SLOT(MinusTime()));
+    t->start(1000);
 }
 
 void MainWindow::setClickedPicture(Blank * b)
@@ -126,7 +157,7 @@ bool MainWindow::Judge(int row1,int col1,int row2,int col2)
     // check destroy all
     if((b[row1][col1]->number==5)&&(b[row2][col2]->number==5)){
         destroy=new All;
-        destroy->eliminate(b,b[row1][col1]);
+        destroy->eliminate(b,b[row1][col1],scorePtr);
         delete destroy;
         return true;
     }
@@ -136,13 +167,13 @@ bool MainWindow::Judge(int row1,int col1,int row2,int col2)
     if((b[row1][col1]->number==5)||(b[row2][col2]->number==5)){
         if(b[row1][col1]->number==5){
             destroy=new One_Color;
-            destroy->eliminate(b,b[row2][col2]);
+            destroy->eliminate(b,b[row2][col2],scorePtr);
             delete destroy;
             return true;
         }
         if(b[row2][col2]->number==5){
             destroy=new One_Color;
-            destroy->eliminate(b,b[row1][col1]);
+            destroy->eliminate(b,b[row1][col1],scorePtr);
             delete destroy;
             return true;
         }
@@ -194,19 +225,19 @@ bool MainWindow::JudgeSpawn5(int row, int col)
     if(return_value){
         switch(return_value){
         case 1: // vertical normal component
-            destroy->spawn(b,b[row][col],1);
+            destroy->spawn(b,b[row][col],1,scorePtr);
             AnySpawn=true;
             break;
         case 2: // horizontal normal component
-            destroy->spawn(b,b[row][col],2);
+            destroy->spawn(b,b[row][col],2,scorePtr);
             AnySpawn=true;
             break;
         case 3: // vertical special component
-            destroy->spawn(b,b[row][col],3);
+            destroy->spawn(b,b[row][col],3,scorePtr);
             AnySpawn=true;
             break;
         case 4: // horizontal special component
-            destroy->spawn(b,b[row][col],4);
+            destroy->spawn(b,b[row][col],4,scorePtr);
             AnySpawn=true;
             break;
         default:
@@ -226,67 +257,67 @@ bool MainWindow::JudgeSpawn5_B(int row, int col)
     if(return_value){
         switch(return_value){
         case 1: // left up normal component
-            destroy->spawn(b,b[row][col],1);
+            destroy->spawn(b,b[row][col],1,scorePtr);
             AnySpawn=true;
             break;
         case 2: // left down normal component
-            destroy->spawn(b,b[row][col],2);
+            destroy->spawn(b,b[row][col],2,scorePtr);
             AnySpawn=true;
             break;
         case 3: // right up normal component
-            destroy->spawn(b,b[row][col],3);
+            destroy->spawn(b,b[row][col],3,scorePtr);
             AnySpawn=true;
             break;
         case 4: // right down normal component
-            destroy->spawn(b,b[row][col],4);
+            destroy->spawn(b,b[row][col],4,scorePtr);
             AnySpawn=true;
             break;
         case 5: // left T normal component
-            destroy->spawn(b,b[row][col],5);
+            destroy->spawn(b,b[row][col],5,scorePtr);
             AnySpawn=true;
             break;
         case 6: // right T normal component
-            destroy->spawn(b,b[row][col],6);
+            destroy->spawn(b,b[row][col],6,scorePtr);
             AnySpawn=true;
             break;
         case 7: // up T normal component
-            destroy->spawn(b,b[row][col],7);
+            destroy->spawn(b,b[row][col],7,scorePtr);
             AnySpawn=true;
             break;
         case 8: // down T normal component
-            destroy->spawn(b,b[row][col],8);
+            destroy->spawn(b,b[row][col],8,scorePtr);
             AnySpawn=true;
             break;
         case 9: // left up special component
-            destroy->spawn(b,b[row][col],9);
+            destroy->spawn(b,b[row][col],9,scorePtr);
             AnySpawn=true;
             break;
         case 10: // left down special component
-            destroy->spawn(b,b[row][col],10);
+            destroy->spawn(b,b[row][col],10,scorePtr);
             AnySpawn=true;
             break;
         case 11: // right up special component
-            destroy->spawn(b,b[row][col],11);
+            destroy->spawn(b,b[row][col],11,scorePtr);
             AnySpawn=true;
             break;
         case 12: // right down special component
-            destroy->spawn(b,b[row][col],12);
+            destroy->spawn(b,b[row][col],12,scorePtr);
             AnySpawn=true;
             break;
         case 13: // left T special component
-            destroy->spawn(b,b[row][col],13);
+            destroy->spawn(b,b[row][col],13,scorePtr);
             AnySpawn=true;
             break;
         case 14: // right T special component
-            destroy->spawn(b,b[row][col],14);
+            destroy->spawn(b,b[row][col],14,scorePtr);
             AnySpawn=true;
             break;
         case 15: // up T special component
-            destroy->spawn(b,b[row][col],15);
+            destroy->spawn(b,b[row][col],15,scorePtr);
             AnySpawn=true;
             break;
         case 16: // down T special component
-            destroy->spawn(b,b[row][col],16);
+            destroy->spawn(b,b[row][col],16,scorePtr);
             AnySpawn=true;
             break;
         default:
@@ -309,28 +340,28 @@ bool MainWindow::JudgeSpawn4_V(int row, int col)
                 // X
                 // O
                 // O
-            destroy->spawn(b,b[row][col],1);
+            destroy->spawn(b,b[row][col],1,scorePtr);
             AnySpawn=true;
             break;
         case 2: // O normal component
                 // O
                 // X
                 // O
-            destroy->spawn(b,b[row][col],2);
+            destroy->spawn(b,b[row][col],2,scorePtr);
             AnySpawn=true;
             break;
         case 3: // O special component
                 // X
                 // O
                 // O
-            destroy->spawn(b,b[row][col],3);
+            destroy->spawn(b,b[row][col],3,scorePtr);
             AnySpawn=true;
             break;
         case 4: // O special component
                 // O
                 // X
                 // O
-            destroy->spawn(b,b[row][col],4);
+            destroy->spawn(b,b[row][col],4,scorePtr);
             AnySpawn=true;
             break;
         default:
@@ -350,19 +381,19 @@ bool MainWindow::JudgeSpawn4_H(int row, int col)
     if(return_value){
         switch(return_value){
         case 1: // OXOO normal component
-            destroy->spawn(b,b[row][col],1);
+            destroy->spawn(b,b[row][col],1,scorePtr);
             AnySpawn=true;
             break;
         case 2: // OOXO normal component
-            destroy->spawn(b,b[row][col],2);
+            destroy->spawn(b,b[row][col],2,scorePtr);
             AnySpawn=true;
             break;
         case 3: // OOXO special component
-            destroy->spawn(b,b[row][col],3);
+            destroy->spawn(b,b[row][col],3,scorePtr);
             AnySpawn=true;
             break;
         case 4: // OOXO special component
-            destroy->spawn(b,b[row][col],4);
+            destroy->spawn(b,b[row][col],4,scorePtr);
             AnySpawn=true;
             break;
         default:
@@ -382,27 +413,27 @@ bool MainWindow::JudgeThree_V(int row, int col)
     if(return_value){
         switch(return_value){
         case 1: // topest normal component
-            destroy->spawn(b,b[row][col],1);
+            if(OnOff)destroy->spawn(b,b[row][col],1,scorePtr);
             AnySpawn=true;
             break;
         case 2: // middle normal component
-            destroy->spawn(b,b[row][col],2);
+            if(OnOff)destroy->spawn(b,b[row][col],2,scorePtr);
             AnySpawn=true;
             break;
         case 3: // downest special component
-            destroy->spawn(b,b[row][col],3);
+            if(OnOff)destroy->spawn(b,b[row][col],3,scorePtr);
             AnySpawn=true;
             break;
         case 4: // topest special component
-            destroy->spawn(b,b[row][col],4);
+            if(OnOff)destroy->spawn(b,b[row][col],4,scorePtr);
             AnySpawn=true;
             break;
         case 5: // middle special component
-            destroy->spawn(b,b[row][col],5);
+            if(OnOff)destroy->spawn(b,b[row][col],5,scorePtr);
             AnySpawn=true;
             break;
         case 6: // downest special component
-            destroy->spawn(b,b[row][col],6);
+            if(OnOff)destroy->spawn(b,b[row][col],6,scorePtr);
             AnySpawn=true;
             break;
         default:
@@ -422,27 +453,27 @@ bool MainWindow::JudgeThree_H(int row, int col)
     if(return_value){
         switch(return_value){
         case 1: // leftest normal component
-            destroy->spawn(b,b[row][col],1);
+            if(OnOff)destroy->spawn(b,b[row][col],1,scorePtr);
             AnySpawn=true;
             break;
         case 2: // middle normal component
-            destroy->spawn(b,b[row][col],2);
+            if(OnOff)destroy->spawn(b,b[row][col],2,scorePtr);
             AnySpawn=true;
             break;
         case 3: // rightest special component
-            destroy->spawn(b,b[row][col],3);
+            if(OnOff)destroy->spawn(b,b[row][col],3,scorePtr);
             AnySpawn=true;
             break;
         case 4: // leftest special component
-            destroy->spawn(b,b[row][col],4);
+            if(OnOff)destroy->spawn(b,b[row][col],4,scorePtr);
             AnySpawn=true;
             break;
         case 5: // middle special component
-            destroy->spawn(b,b[row][col],5);
+            if(OnOff)destroy->spawn(b,b[row][col],5,scorePtr);
             AnySpawn=true;
             break;
         case 6: // rightest special component
-            destroy->spawn(b,b[row][col],6);
+            if(OnOff)destroy->spawn(b,b[row][col],6,scorePtr);
             AnySpawn=true;
             break;
         default:
@@ -454,7 +485,7 @@ bool MainWindow::JudgeThree_H(int row, int col)
 }
 
 void MainWindow::ZeroVanish()
-{/*
+{
     while(1){
         bool All_Destroy=false;
         MoveFillZero();
@@ -463,8 +494,37 @@ void MainWindow::ZeroVanish()
             break;
         }
     }
-    SpawnAfterEliminate();*/
+    SpawnAfterEliminate();
+
+    if(!CanChange()){
+        ReNewMap();
+    }
+
     ReNewPicture();
+}
+
+void MainWindow::MinusTime()
+{
+    time_lost--;
+
+    TimeString=QString::number(time_lost,10);
+    ui->time_left->setText(TimeString);
+
+    if(time_lost==0){
+        t->stop();
+        disconnect(t,SIGNAL(timeout()),this,SLOT(MinusTime()));
+        int S;
+        if(score<300)S=0;
+        else if(score<600)S=1;
+        else if(score<1000)S=2;
+        else if(score>=1000)S=3;
+
+        G=new GameOver(this,score,S);
+        G->show();
+        GG=true;
+        //this->close();
+    }
+
 }
 
 void MainWindow::button_clicked(int row,int col)
@@ -515,6 +575,13 @@ void MainWindow::ReNewPicture()
             b[i][j]->setButtonPicture();
         }
     }
+
+    ScoreString=QString::number(score,10);
+    ui->Score->setText(ScoreString);
+
+    if(score>=300)ui->StarPic->setPixmap(QPixmap(":/pic/star1.png"));
+    if(score>=600)ui->StarPic->setPixmap(QPixmap(":/pic/star2.png"));
+    if(score>=1000)ui->StarPic->setPixmap(QPixmap(":/pic/star3.png"));
 }
 
 void MainWindow::MoveFillZero()
@@ -582,19 +649,19 @@ void MainWindow::SpawnAfterEliminate()
         for(int j=9;j>=0;j--){
             if(b[i][j]->number==0){
                 b[i][j]->setRandonNumber();
-                if(j>=2&&(b[i][j]->number==b[i][j-2]->number)&&(b[i][j]->number==b[i][j-1]->number)){
+                if(j>=2&&((b[i][j]->number==b[i][j-2]->number)||(b[i][j]->number==b[i][j-2]->number%10))&&((b[i][j]->number==b[i][j-1]->number)||(b[i][j]->number==b[i][j-1]->number%10))){
                     b[i][j]->number=0;
                     j++;
                 }//left condition
-                else if(j<=7&&(b[i][j]->number==b[i][j+1]->number)&&(b[i][j]->number==b[i][j+2]->number)){
+                else if(j<=7&&((b[i][j]->number==b[i][j+1]->number)||(b[i][j]->number==b[i][j+1]->number%10))&&((b[i][j]->number==b[i][j+2]->number)||(b[i][j]->number==b[i][j+2]->number%10))){
                     b[i][j]->number=0;
                     j++;
                 }//right condition
-                else if(i<=7&&(b[i][j]->number==b[i+1][j]->number)&&(b[i][j]->number==b[i+2][j]->number)){
+                else if(i<=7&&((b[i][j]->number==b[i+1][j]->number)||(b[i][j]->number==b[i+1][j]->number%10))&&((b[i][j]->number==b[i+2][j]->number)||(b[i][j]->number==b[i+2][j]->number))){
                     b[i][j]->number=0;
                     j++;
                 }//down condition
-                else if(j>=1&&j<=8&&(b[i][j]->number==b[i][j-1]->number)&&(b[i][j]->number==b[i][j+1]->number)){
+                else if(j>=1&&j<=8&&((b[i][j]->number==b[i][j-1]->number)||(b[i][j]->number==b[i][j-1]->number%10))&&((b[i][j]->number==b[i][j+1]->number)||(b[i][j]->number==b[i][j+1]->number%10))){
                     b[i][j]->number=0;
                     j++;
                 }//middle condition
@@ -604,3 +671,81 @@ void MainWindow::SpawnAfterEliminate()
     ReNewPicture();
 }
 
+bool MainWindow::CanChange()
+{
+    OnOff=false;// close the ability to eliminate
+
+    for(int i=0;i<10;i++){ // if three H can eliminate
+        for(int j=0;j<9;j++){
+            int tmp_number=b[i][j]->number;
+            b[i][j]->number=b[i][j+1]->number;
+            b[i][j+1]->number=tmp_number;
+            if(JudgeThree_H(i,j) || JudgeThree_H(i,j+1)){
+                OnOff=true;
+                tmp_number=b[i][j]->number;
+                b[i][j]->number=b[i][j+1]->number;
+                b[i][j+1]->number=tmp_number;
+                return true;
+            }
+            tmp_number=b[i][j]->number;
+            b[i][j]->number=b[i][j+1]->number;
+            b[i][j+1]->number=tmp_number;
+        }
+    }
+
+    for(int j=0;j<10;j++){
+        for(int i=0;i<9;i++){
+            int tmp_number=b[i][j]->number;
+            b[i][j]->number=b[i+1][j]->number;
+            b[i+1][j]->number=tmp_number;
+            if(JudgeThree_V(i,j) || JudgeThree_V(i+1,j)){
+                OnOff=true;
+                tmp_number=b[i][j]->number;
+                b[i][j]->number=b[i+1][j]->number;
+                b[i+1][j]->number=tmp_number;
+                return true;
+            }
+            tmp_number=b[i][j]->number;
+            b[i][j]->number=b[i+1][j]->number;
+            b[i+1][j]->number=tmp_number;
+        }
+    }
+
+    return false;
+}
+
+void MainWindow::ReNewMap()
+{
+    for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+            b[i][j]->number=0;
+        }
+    } // initialize
+
+    for(int i=0;i<10;i++){
+        for(int j=0;j<10;j++){
+            b[i][j]->setRandonNumber();
+            b[i][j]->setButtonPicture();
+            if(j>=2&&((b[i][j]->number)==(b[i][j-1]->number))&&((b[i][j]->number)==(b[i][j-2]->number))){ // check row
+               j--;
+            }
+            if(i>=2&&((b[i][j]->number)==(b[i-1][j]->number))&&((b[i][j]->number)==(b[i-2][j]->number))){ // check column
+               j--;
+            }
+        }
+    } // re-spawn
+
+    if(!CanChange()){
+        ReNewMap();
+    }
+
+    return;
+}
+
+/*
+void MainWindow::on_pushButton_clicked()
+{
+    t->stop();
+    disconnect(t,SIGNAL(timeout()),this,SLOT(MinusTime()));
+    GameStart();
+}*/

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>GameOver</class>
+ <widget class="QMainWindow" name="GameOver">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,97 +13,81 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="text1">
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>0</y>
-      <width>120</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Algerian</family>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>SCORE:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Score">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>0</y>
-      <width>170</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Algerian</family>
-      <pointsize>24</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="text2">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>80</y>
-      <width>170</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Algerian</family>
-      <pointsize>24</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Time:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="time_left">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>80</y>
-      <width>170</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Algerian</family>
-      <pointsize>24</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>60</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="StarPic">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>160</y>
+      <x>240</x>
+      <y>20</y>
       <width>300</width>
-      <height>300</height>
+      <height>100</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Algerian</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Time is UP!!!!</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>140</y>
+      <width>281</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Algerian</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Your Score:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="scorePic">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>150</y>
+      <width>141</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Algerian</family>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="starPic">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>270</y>
+      <width>271</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Algerian</family>
+      <pointsize>24</pointsize>
+     </font>
     </property>
     <property name="text">
      <string/>
@@ -111,7 +95,6 @@
    </widget>
   </widget>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>

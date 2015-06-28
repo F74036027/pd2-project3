@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     vertical.cpp \
     horizontal.cpp \
     three_h.cpp \
-    three_v.cpp
+    three_v.cpp \
+    startwindow.cpp \
+    gameover.cpp
 
 HEADERS  += mainwindow.h \
     blank.h \
@@ -41,9 +43,13 @@ HEADERS  += mainwindow.h \
     vertical.h \
     horizontal.h \
     three_h.h \
-    three_v.h
+    three_v.h \
+    startwindow.h \
+    gameover.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    startwindow.ui \
+    gameover.ui
 
 RESOURCES += \
     res.qrc
