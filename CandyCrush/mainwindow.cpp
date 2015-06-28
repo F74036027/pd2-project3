@@ -528,7 +528,7 @@ void MainWindow::MinusTime()
 }
 
 void MainWindow::button_clicked(int row,int col)
-{qDebug()<<(b[row][col]->number);
+{
     if(!isClicked){
        setClickedPicture(b[row][col]);
        record_row=row;
